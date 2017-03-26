@@ -1,35 +1,29 @@
 'use strict';
 
-const mongoose = require('mongoose');
-const users = require('./models/users');
-const products = require('./models/products');
+const sqlite3 = require('sqlite3').verbose();
+const fs = require('fs');
 
-mongoose.connect('mongodb://localhost:27017/test');
+// Initialiser la connection
+// SQLite est une base de données ultra light
+// Toutes les données sont stockées sur un seul simple fichier
+// On va donc d'abord require ce fichier et vérifier qu'il existe
+//------------------------------------------------//
+const dbfile = 'test.db';
+const db = new sqlite3.Database(dbfile);
+//------------------------------------------------//
 
-mongoose.connection.on('error', err => {
-  console.log('ERROR close MongoDB process', err);
-});
+// Construire les models
+//------------------------------------------------//
 
-mongoose.connection.on('connnected', function () {
-  console.log('MongoDb connection success on  port 27017')
-});
+// Si le fichier n'existe pas je vais le créer
+if (!fs.existsSync(dbfile)) {
 
-mongoose.connection.on('disconnected', function () {
-  console.log('MongoDB process disconnected');
-});
+    // Et définir les models de chaque table
+    const users = require('./models/users');
 
-process.on('SIGINT', function () {
-  mongoose.connection.close(function () {
-    console.log('Server process terminated. Closing MongoDB');
-    process.exit(0);
-  });
-});
-
-const db = {
-  users: mongoose.model('Users', users),
-  products: mongoose.model('Products', products)
+    db.run(users);
 }
+//------------------------------------------------//
 
-
-// db.users, db.products
+// J'exporte ma base de données
 module.exports = db;
