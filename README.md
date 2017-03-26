@@ -13,7 +13,7 @@ Ce chapitre s'inscrit dans le module **Node MVC et SQLite3**
     
 3. [x] [Node MVC SQLite3 étape 3](https://github.com/simplonco/node-mvc-sqlite-step3)
 
-Il existe un [module identique avec MongoDB](https://github.com/simplonco/node-mvc-mongodb-step1).
+Il existe un [module identique avec MongoDB](https://github.com/simplonco/node-mvc-mongodb-step3).
 
 Vous pouvez trouver ce module dans les parcours suivants :
 
